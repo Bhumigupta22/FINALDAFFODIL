@@ -4,7 +4,22 @@
 DEPLOYMENT LINK :  https://finaldaffodil.vercel.app/
 ************************************************************************************************************
 
-A modern voice-based shopping list manager with AI-powered smart suggestions. Add items using natural voice commands, get smart recommendations based on your purchase history, and manage your shopping list efficiently.
+The Voice Command Shopping Assistant is a full-stack web application designed to simplify shopping list management using voice-based interactions and smart recommendations. The frontend is built with React and Vite, providing a responsive and mobile-optimized user interface with real-time feedback for voice input, item updates, and suggestion display. Voice commands are captured in the browser and sent to the backend through REST APIs.
+
+The backend is developed using Flask and deployed on Render. It handles voice command processing, natural language understanding, and shopping list operations. spaCy and NLTK are used to extract item names, quantities, units, and categories from natural language input. The processed data is stored in a database, enabling persistent list management and history tracking.
+
+A recommendation module analyzes past shopping behavior to generate smart suggestions such as frequently purchased items and relevant alternatives. The frontend communicates with the backend using Axios, ensuring smooth data flow and separation of concerns. The application follows a modular architecture, making it easy to maintain, scale, and extend with future features like user authentication and personalized recommendations.
+
+#How does this app work 
+- On the top click "Try to speak". Speak anything you want like grab an apple or add apple or delete apple anything it will ask to confirm and will directly add to the "Shopping list" section. If you want to say Add 12 bananas it will add 12 Bananas directly in Shopping List.
+- Below it there is Type what you want to add and delete: write manually and click on "GO" it will directly add to the shopping list.
+- There is increment(+) and decrement(-) to increase or decrease the quantity of the item.
+- There is also a Search option in Shopping List section.
+- In "Add Grocery Item with Price" section you can add your item with different fields like name, price,category etc and it will add to the database.
+- Now this saved dataset in database is used in "Filter by Price" section. Try search Min = 0 and Max = 10 and choosing the brand also and click "FILTER". It will give the filtered result.
+- You can directly add the filtered ones in the Shopping List by clicking "Add to cart".
+- There is a Smart Suggestion section which will give suggestion according to weather and according to shopping list. This is built by using Apriori Algorithm.
+- If you want to add from Smart Suggestions you can click "+Add" button it will add directly in Shopping List 
 
 ## Features
 
@@ -192,38 +207,7 @@ voice-shopping-assistant/
 └── APPROACH.md
 ```
 
-## Error Handling
 
-The application includes comprehensive error handling:
-- Graceful fallback for voice recognition failures
-- User-friendly error messages
-- Automatic retry mechanisms
-- Validation of all user inputs
-- Database transaction rollback on errors
-
-## Performance Considerations
-
-- Frontend uses React hooks for efficient state management
-- API responses include loading states
-- Database queries are optimized with indexing
-- Voice processing runs asynchronously to prevent UI blocking
-- Suggestions are cached and updated on demand
-
-## Limitations & Future Enhancements
-
-**Current Limitations:**
-- Requires microphone access (browser permission)
-- Offline mode not yet implemented
-- Single-user session (no user accounts)
-
-**Future Enhancements:**
-- User authentication and cloud sync
-- Offline data persistence with IndexedDB
-- Price comparison across stores
-- Dietary restriction filters
-- Barcode scanning
-- Recipe-based shopping lists
-- Smart purchase predictions
 
 ## Testing
 
@@ -248,13 +232,6 @@ ON VERSEL
 - No hardcoded secrets in code
 - SQL injection prevention through parameterized queries
 
-## Contributing
-
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
 
 ## License
 
