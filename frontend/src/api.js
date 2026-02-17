@@ -1,0 +1,33 @@
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+const api = axios.create({
+  baseURL: `${API_URL}/api`
+});
+
+export const shoppingAPI = {
+  getList: () => api.get('/shopping/list'),
+  addItem: (item) => api.post('/shopping/add', item),
+  removeItem: (itemId) => api.delete(`/shopping/${itemId}`),
+  completeItem: (itemId) => api.put(`/shopping/${itemId}/complete`),
+  updateItem: (itemId, data) => api.put(`/shopping/${itemId}`, data)
+};
+
+export const voiceAPI = {
+  processCommand: (text) => api.post('/voice/process', { text }),
+  transcribeAudio: (audioFile, language = 'en-US') => {
+    const formData = new FormData();
+    formData.append('audio', audioFile);
+    formData.append('language', language);
+    return api.post('/voice/transcribe', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  },
+  getLanguages: () => api.get('/voice/languages')
+};
+
+export const suggestionsAPI = {
+  getSmartSuggestions: () => api.get('/suggestions/'),
+  getHistory: () => api.get('/suggestions/history')
+};
