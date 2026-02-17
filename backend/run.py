@@ -2,13 +2,12 @@ import os
 from app import create_app
 from app.config import config
 
-def create_application():
-    """Create and configure the Flask application"""
-    env = os.getenv('FLASK_ENV', 'development')
-    app = create_app()
-    app.config.from_object(config[env])
-    return app
+# 1. Create the application instance at the top level (REQUIRED for Render/Gunicorn)
+env = os.getenv('FLASK_ENV', 'development')
+app = create_app()
+app.config.from_object(config[env])
 
 if __name__ == '__main__':
-    app = create_application()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # 2. Use Render's dynamic port, or 5000 for local testing
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
