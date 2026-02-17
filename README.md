@@ -1,5 +1,9 @@
 # Voice Command Shopping Assistant
 
+************************************************************************************************************
+DEPLOYMENT LINK :  https://finaldaffodil.vercel.app/
+************************************************************************************************************
+
 A modern voice-based shopping list manager with AI-powered smart suggestions. Add items using natural voice commands, get smart recommendations based on your purchase history, and manage your shopping list efficiently.
 
 ## Features
@@ -15,6 +19,7 @@ A modern voice-based shopping list manager with AI-powered smart suggestions. Ad
 - Seasonal product suggestions
 - Alternative product recommendations
 - Real-time suggestion updates
+USED APRIORI ALGORITHM
 
 📝 **Shopping List Management**
 - Add/remove/complete items via voice or buttons
@@ -32,7 +37,6 @@ A modern voice-based shopping list manager with AI-powered smart suggestions. Ad
 
 **Backend:**
 - Flask (Python web framework)
-- Google Cloud Speech-to-Text API
 - spaCy & NLTK (Natural Language Processing)
 - SQLite (Local database)
 - Flask-CORS (Cross-origin requests)
@@ -70,13 +74,6 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Download spaCy model
-python -m spacy download en_core_web_sm
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your Google Cloud credentials path
-
 # Run development server
 python run.py
 ```
@@ -91,8 +88,6 @@ cd frontend
 # Install dependencies
 npm install
 
-# Set up environment variables
-cp .env.example .env
 
 # Run development server
 npm run dev
@@ -238,47 +233,12 @@ cd backend
 pytest tests/
 ```
 
-## Deployment to Google Cloud
-
-### Setup
-
-```bash
-# Authenticate with Google Cloud
-gcloud auth login
-
-# Create a Google Cloud project
-gcloud projects create voice-shopping-assistant
-
-# Enable required APIs
-gcloud services enable run.googleapis.com
-gcloud services enable cloudbuild.googleapis.com
-gcloud services enable speech.googleapis.com
-```
 
 ### Deploy Backend
-
-```bash
-cd backend
-gcloud run deploy voice-shopping-api \
-  --source . \
-  --platform managed \
-  --region us-central1 \
-  --allow-unauthenticated
-```
+ON RENDER 
 
 ### Deploy Frontend
-
-```bash
-cd frontend
-npm run build
-
-gcloud storage buckets create gs://voice-shopping-frontend
-
-gsutil -m cp -r dist/* gs://voice-shopping-frontend/
-
-gcloud compute backend-buckets create voice-shopping-backend \
-  --gcs-bucket-name=voice-shopping-frontend
-```
+ON VERSEL
 
 ## Security Considerations
 
