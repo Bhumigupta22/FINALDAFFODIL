@@ -31,3 +31,8 @@ export const suggestionsAPI = {
   getSmartSuggestions: () => api.get('/suggestions/'),
   getHistory: () => api.get('/suggestions/history')
 };
+export const searchAPI = {
+  searchItems: (query) => api.post('/search/items', { text: query }),
+  filterByPrice: (filters) => api.post('/search/by-price', filters),
+  voiceSearch: (text) => api.post('/search/voice', { text })
+};

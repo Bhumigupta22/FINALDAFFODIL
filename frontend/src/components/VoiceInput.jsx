@@ -146,7 +146,7 @@ export function VoiceInput({ onText, loading }) {
         <div className="method-divider">OR</div>
 
         <div className="method-option">
-          <label>⌨️ Type what you want to add:</label>
+          <label>⌨️ Type what you want to add and delete:</label>
           <form onSubmit={handleTextSubmit} className="text-input-form">
             <input
               type="text"
@@ -161,7 +161,7 @@ export function VoiceInput({ onText, loading }) {
               disabled={loading || !textInput.trim()}
               className="text-submit-button"
             >
-              Add
+              GO
             </button>
           </form>
         </div>

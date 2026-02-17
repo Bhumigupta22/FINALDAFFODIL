@@ -85,6 +85,11 @@ export function ShoppingList({ items, onItemRemove, onItemComplete, onQuantityCh
                     <div key={item.id} className="item">
                       <div className="item-details">
                         <div className="item-name">{item.item_name}</div>
+                        <div className="item-meta">
+                          {item.brand && <span className="badge brand">{item.brand}</span>}
+                          {item.size && <span className="badge size">{item.size}</span>}
+                          {item.price && <span className="badge price">${item.price.toFixed(2)}</span>}
+                        </div>
                         {item.quantity && (
                           <div className="item-quantity-control">
                             <button

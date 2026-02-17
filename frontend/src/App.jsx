@@ -2,6 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { VoiceInput } from './components/VoiceInput';
 import { ShoppingList } from './components/ShoppingList';
 import { Suggestions } from './components/Suggestions';
+import { PriceFilter } from './components/PriceFilter';
+import { GroceryEntry } from './components/GroceryEntry';
+import SearchResults from './components/SearchResults';
 import { shoppingAPI, voiceAPI } from './api';
 import './App.css';
 
@@ -10,6 +13,13 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [lastCommand, setLastCommand] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleFilterResults = (results, query) => {
+    setSearchResults(results);
+    setSearchQuery(query);
+  };
 
   useEffect(() => {
     loadShoppingList();
@@ -56,6 +66,7 @@ function App() {
         } else {
           setItems([...items, addedItem]);
         }
+        setSearchResults([]);
       } else if (response.data.command === 'remove') {
         // Handle remove command
         const itemToRemove = items.find(item =>
@@ -66,6 +77,15 @@ function App() {
           await shoppingAPI.removeItem(itemToRemove.id);
           setItems(items.filter(item => item.id !== itemToRemove.id));
         }
+        setSearchResults([]);
+      } else if (response.data.command === 'search') {
+        // Handle search command
+        setSearchQuery(response.data.item_name);
+        setSearchResults(response.data.search_results || []);
+      } else if (response.data.command === 'filter') {
+        // Handle filter command
+        setSearchQuery('price filter');
+        setSearchResults(response.data.filter_results || []);
       }
     } catch (err) {
       setError('Failed to process command');
@@ -153,7 +173,7 @@ function App() {
       <div className="container">
         <header className="header">
           <h1>🛒 Voice Shopping Assistant</h1>
-          <p>Speak to add items, remove them, or get smart suggestions</p>
+          <p>Speak to add items, search, filter by price, or get smart suggestions</p>
         </header>
 
         {error && (
@@ -174,6 +194,8 @@ function App() {
 
         <div className="content-grid">
           <div className="left-column">
+            <GroceryEntry onItemAdded={() => {}} loading={loading} />
+            
             <ShoppingList
               items={items}
               onItemRemove={handleRemoveItem}
@@ -184,6 +206,17 @@ function App() {
           </div>
 
           <div className="right-column">
+            <PriceFilter onResults={handleFilterResults} loading={loading} />
+            
+            {searchResults.length > 0 && (
+              <SearchResults 
+                results={searchResults} 
+                onAddItem={handleAddItem}
+                loading={loading}
+                searchQuery={searchQuery}
+              />
+            )}
+            
             <Suggestions items={items} onAddItem={handleAddItem} loading={loading} />
           </div>
         </div>
